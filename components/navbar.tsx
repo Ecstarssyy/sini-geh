@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Menu, X } from "lucide-react"; // Ikon dari lucide-react, bisa diganti dengan ikon favorit
+import { MapPin, Menu, X } from "lucide-react"; // Ikon dari lucide-react, bisa diganti dengan ikon favorit
 import { cn } from "@/lib/utils"; // Class name utility untuk menggabungkan kelas
+import Image from "next/image";
 
 type NavLink = {
   name: string;
@@ -10,10 +11,8 @@ type NavLink = {
 };
 
 const navLinks: NavLink[] = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Services", href: "/services" },
-  { name: "Contact", href: "/contact" },
+  { name: "Beranda", href: "/" },
+  { name: "Rekomendasi", href: "/rekomendasi" },
 ];
 
 const Navbar: React.FC = () => {
@@ -24,14 +23,18 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-white shadow-lg">
+    <nav className="border-black border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex h-16 font-belanosima">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <a href="/" className="text-2xl font-bold text-gray-800">
-              MyLogo
-            </a>
+            <Image
+              src="/images/logo.png"
+              width={500}
+              height={500}
+              alt="logo"
+              className="w-16"
+            />
           </div>
 
           {/* Desktop Menu */}
@@ -40,15 +43,20 @@ const Navbar: React.FC = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-gray-800 hover:text-gray-600 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-gray-800 hover:text-gray-600 px-3 ml-4 py-2 rounded-md text-md font-medium"
               >
                 {link.name}
               </a>
             ))}
           </div>
 
+          <div className="ml-auto gap-2 items-center h-fit self-center justify-center border flex rounded-xl py-2 px-4">
+            <MapPin/>
+            <p>Bandar Lampung</p>
+          </div>
+
           {/* Mobile Hamburger Menu */}
-          <div className="flex md:hidden items-center">
+          <div className="flex ml-auto md:hidden items-center">
             <button
               onClick={toggleSidebar}
               className="text-gray-800 focus:outline-none"
