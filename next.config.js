@@ -5,19 +5,30 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/__/auth',
-        destination: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseapp.com/__/auth`
+        source: "/__/auth",
+        destination: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseapp.com/__/auth`,
       },
       {
-        source: '/__/auth/:path*',
-        destination: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseapp.com/__/auth/:path*`
+        source: "/__/auth/:path*",
+        destination: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseapp.com/__/auth/:path*`,
       },
       {
-        source: '/__/firebase/init.json',
-        destination: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseapp.com/__/firebase/init.json`
-      }
+        source: "/__/firebase/init.json",
+        destination: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseapp.com/__/firebase/init.json`,
+      },
     ];
-  }
+  },
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+        port: "",
+        pathname: "**",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

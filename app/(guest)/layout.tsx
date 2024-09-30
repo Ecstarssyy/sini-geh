@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { usePathname } from "next/navigation";
 import React from "react";
+import Footer from "@/components/footer/footer";
 
 function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? ""; // Mendapatkan path URL saat ini
@@ -23,6 +24,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       <div className="px-3">
         {children}
       </div>
+      <Footer/>
     </div>
   );
 }
