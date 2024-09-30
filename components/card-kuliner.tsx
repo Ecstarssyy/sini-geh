@@ -8,7 +8,7 @@ function CardKuliner() {
     <div className="flex flex-col gap-3 bg-gradient-to-b from-[#E76824] to-[#4D2B28] w-[350px] py-4 px-8 text-white rounded-3xl">
       {/* Atas */}
       <div className="flex justify-between items-center ">
-        <p className="font-bold text-2xl">BAKSO</p>
+        <p className="font-bold text-2xl">Bakso</p>
         <div className="flex border border-white w-fit rounded-md p-1 gap-1">
           <Star className="text-yellow-400 fill-yellow-400" />
           <p>4.3</p>
