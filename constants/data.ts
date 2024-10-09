@@ -9,6 +9,11 @@ export type User = {
   status: string;
 };
 
+export type Wisata = {
+  no: number;
+  namaWisata: string;
+}
+
 export type Employee = {
   id: number;
   first_name: string;
