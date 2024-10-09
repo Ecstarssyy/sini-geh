@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { usePathname } from "next/navigation";
@@ -20,9 +21,10 @@ function Layout({ children }: { children: React.ReactNode }) {
     <div>
       <Toaster />
       <Navbar />
-      <div className="px-3">
-        {children}
+      <div className="w-full py-8 flex items-center justify-center">
+        <div className="container">{children}</div>
       </div>
+      <Footer />
     </div>
   );
 }
