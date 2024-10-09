@@ -4,19 +4,19 @@ import { Instagram, Mail, Phone, Globe } from "lucide-react";
 function Footer() {
   return (
     <footer className="bg-gradient-to-b from-[#E76824] to-[#4D2B28] text-white py-10 px-8">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-9">
         {/* Mengan Pai Section */}
         <div className="flex flex-col gap-3">
-          <h3 className="text-2xl font-bold">MENGAN PAI</h3>
+          <h3 className="text-2xl font-bold font-belanosima">MENGAN PAI</h3>
           <p>
             Temukan berbagai kuliner di Bandar Lampung lengkap dengan rating,
-            lokasi, jam buka, harga, dan ulasan di Mengan Pai. 
+            lokasi, jam buka, harga, dan ulasan di Mengan Pai.
           </p>
         </div>
 
         {/* Menu Section */}
         <div className="flex flex-col gap-3">
-          <h3 className="text-2xl font-bold">Menu</h3>
+          <h3 className="text-2xl font-bold font-belanosima">Menu</h3>
           <ul className="flex flex-col gap-2">
             <li>
               <a href="#" className="hover:text-yellow-300">
@@ -29,16 +29,14 @@ function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-yellow-300">
-                
-              </a>
+              <a href="#" className="hover:text-yellow-300"></a>
             </li>
           </ul>
         </div>
 
         {/* Kontak Kami Section */}
         <div className="flex flex-col gap-3">
-          <h3 className="text-2xl font-bold">Kontak Kami</h3>
+          <h3 className="text-2xl font-bold font-belanosima">Kontak Kami</h3>
           <ul className="flex flex-col gap-2">
             {/* Instagram */}
             <li className="flex items-center gap-3">
@@ -62,7 +60,10 @@ function Footer() {
             {/* Email */}
             <li className="flex items-center gap-3">
               <Mail />
-              <a href="mailto:info@menganpai.com" className="hover:text-yellow-300">
+              <a
+                href="mailto:info@menganpai.com"
+                className="hover:text-yellow-300"
+              >
                 info@menganpai.com
               </a>
             </li>
