@@ -20,6 +20,9 @@ dependencies:
   '@iconify/react':
     specifier: ^5.0.2
     version: 5.0.2(react@18.2.0)
+  '@next/font':
+    specifier: ^14.2.13
+    version: 14.2.13(next@14.2.3)
   '@radix-ui/react-accordion':
     specifier: ^1.2.0
     version: 1.2.0(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
@@ -927,6 +930,14 @@ packages:
 
   /@next/env@14.2.3:
     resolution: {integrity: sha512-W7fd7IbkfmeeY2gXrzJYDx8D2lWKbVoTIj1o1ScPHNzvp30s1AuoEFSdr39bC5sjxJaxTtq3OTCZboNp0lNWHA==}
+    dev: false
+
+  /@next/font@14.2.13(next@14.2.3):
+    resolution: {integrity: sha512-xtleJ172yNVSVoQoMIwPHnM9zSPOzNB964mZMOFmRaLWgWMgmlhCVI42dlDSGc6d9nQ/WHCmCZaJMloS1HHGXg==}
+    peerDependencies:
+      next: '*'
+    dependencies:
+      next: 14.2.3(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@next/swc-darwin-arm64@14.2.3:

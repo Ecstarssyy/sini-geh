@@ -15,6 +15,7 @@
     "@firebase/util": "^1.9.7",
     "@hookform/resolvers": "^3.9.0",
     "@iconify/react": "^5.0.2",
+    "@next/font": "^14.2.13",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-avatar": "^1.1.0",
