@@ -20,6 +20,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     <div>
       <Toaster />
       <Navbar />
+
       {children}
     </div>
   );
