@@ -41,4 +41,10 @@ export const navItems: NavItem[] = [
     icon: "user",
     label: "berita",
   },
+  {
+    title: "Kuliner",
+    href: "/dashboard/kuliner",
+    icon: "heater",
+    label: "kuliner",
+  },
 ];

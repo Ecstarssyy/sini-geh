@@ -6,7 +6,7 @@ import Image from "next/image";
 function Page() {
   return (
     <div> 
-      <div className="bg-gradient-to-l from-[#E76824] to-[#4D2B28] rounded-3xl p-4 flex justify-between items-center shadow-lg">
+      <div className="bg-gradient-to-l from-[#E76824] to-[#4D2B28] rounded-3xl pl-4 flex justify-between items-center shadow-lg">
       {/* Text Content */}
       <div className="text-left">
         <h2 className="text-yellow-400 font-bold text-2xl mb-2">
@@ -18,7 +18,7 @@ function Page() {
       </div>
 
       {/* Image */}
-      <div className="rounded-xl overflow-hidden">
+      <div className="rounded-xl overflow-hidden drop-shadow-xl">
         <img
           src="/images/kuliner.png "
         />

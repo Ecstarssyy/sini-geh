@@ -23,9 +23,9 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className="translate-x-5 py-1 flex items-center rounded-r-full w-full justify-center">
+      <nav className="flex py-4 items-center rounded-r-full justify-center relative">
         {/* Logo */}
-        <div className="flex items-center translate-x-2">
+        <div className="flex items-center absolute -translate-x-36">
           <Image
             src="/images/logomangkok.png"
             alt="Mengan Pai"
@@ -36,18 +36,18 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Navigation Links */}
-        <div className="bg-[#4D2B28] -z-10 -translate-x-14 pl-16 pr-8 flex items-center justify-center rounded-full py-2">
+        <div className="bg-[#4D2B28] pl-16 pr-8 flex items-center justify-center rounded-full py-2">
           <ul className="flex gap-6 ml-8 mr-4">
             <li>
-              <a
-                href="#"
-                className="text-white hover:text-yellow-300 text-lg left-1"
-              >
+              <a href="/" className="text-white hover:text-yellow-300 text-lg">
                 Beranda
               </a>
             </li>
             <li>
-              <a href="#" className="text-yellow-400 font-bold text-lg">
+              <a
+                href="/rekomendasi"
+                className="text-yellow-400 font-bold text-lg"
+              >
                 Rekomendasi
               </a>
             </li>

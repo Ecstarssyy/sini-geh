@@ -9,6 +9,7 @@ import {
   CreditCard,
   File,
   FileText,
+  Heater,
   HelpCircle,
   Image,
   Laptop,
@@ -60,6 +61,7 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
+  heater: Heater,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"
