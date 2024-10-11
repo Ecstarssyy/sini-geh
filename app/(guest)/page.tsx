@@ -1,3 +1,4 @@
+
 'use client';
 import { useState } from "react";
 import { LockIcon } from "lucide-react";
@@ -8,12 +9,7 @@ export default function Home() {
 
   return (
     <div
-      className="w-full h-screen flex flex-col justify-between items-center"
-      style={{
-        backgroundImage:
-          "url(https://www.turtlefiji.com/wp-content/uploads/2023/09/Hero-best-tropical-island-vacations-turtle-island-fiji-1024x575-1.jpg)",
-        backgroundSize: "cover",
-      }}
+      className="w-full h-screen flex flex-col justify-between items-center bg-[url(/images/background.jpg)] bg-cover bg-center bg-no-repeat"
     >
       {/* Top Right Button */}
       <div className="absolute top-4 right-4">
@@ -57,12 +53,9 @@ export default function Home() {
         )}
       </div>
 
-      <div className="rounded-md flex-col bg-[#DAF1DE] mt-8 w-[870px] h-[430px] flex items-start justify-start py-3">
-        <h2 className="font-bold text-black text-center w-full text-xl">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus
-          commodi magni velit? Ducimus hic ex mollitia, eius voluptate porro.
-          Esse sapiente quae quam sint ipsam aliquid facilis recusandae
-          pariatur accusamus!
+      <div className="rounded-md flex-col bg-[#DAF1DE] mt-8 w-[870px] h-[430px] flex items-center justify-center py-3">
+        <h2 className="font-bold text-black justify-center text-center text-4xl">
+          Selamat Datang Di Website Sini Geh!
         </h2>
       </div>
 
@@ -73,7 +66,7 @@ export default function Home() {
 
       {/* Search Bar */}
       <div className="w-full flex justify-center mb-32">
-        <div className="relative w-[90px] flex bg-[#235347] rounded-full py-1 items-center border border-white border-[1px]">
+        <div className="relative w-[900px] flex bg-[#235347] rounded-full py-1 items-center border border-white border-[1px]">
           <SearchIcon className="absolute left-3 text-white" />
           <input
             type="text"
@@ -82,6 +75,7 @@ export default function Home() {
           />
         </div>
       </div>
+    
     </div>
   );
 }
