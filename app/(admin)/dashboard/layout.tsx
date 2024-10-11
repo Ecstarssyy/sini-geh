@@ -4,8 +4,8 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "Admin Panel Website KMK",
-  description: "Manajemen data website KMK",
+  title: "Admin Panel Website Mengan Pai",
+  description: "Manajemen data website Mengan Pai",
 };
 
 function DashboardLayout({ children }: { children: React.ReactNode }) {
