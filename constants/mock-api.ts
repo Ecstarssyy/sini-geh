@@ -3,7 +3,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 import { matchSorter } from "match-sorter"; // For filtering
-import sortBy from "sort-by"; // For sorting
 import { faker } from "@faker-js/faker";
 
 // Define the shape of User data

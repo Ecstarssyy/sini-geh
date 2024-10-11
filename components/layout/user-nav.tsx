@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useLoadingCallback } from "react-loading-hook";
 
-export function UserNav() {
+export default function UserNav() {
   const router = useRouter();
   const { user } = useAuth();
   const [hasLoggedOut, setHasLoggedOut] = useState(false);
@@ -84,5 +84,7 @@ export function UserNav() {
         </DropdownMenuContent>
       </DropdownMenu>
     );
+  } else {
+    return null;
   }
 }
