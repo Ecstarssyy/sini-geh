@@ -2,13 +2,13 @@
 // 🛑 Nothing in here has anything to do with Nextjs, it's just a fake database
 ////////////////////////////////////////////////////////////////////////////////
 
-import { matchSorter } from 'match-sorter'; // For filtering
-import sortBy from 'sort-by'; // For sorting
-import { faker } from '@faker-js/faker';
+import { matchSorter } from "match-sorter"; // For filtering
+import sortBy from "sort-by"; // For sorting
+import { faker } from "@faker-js/faker";
 
 // Define the shape of User data
 
-type Gender = 'male' | 'female';
+type Gender = "male" | "female";
 
 export type User = {
   id: number;
@@ -37,41 +37,41 @@ export const fakeUsers = {
   initialize() {
     const sampleUsers: User[] = [];
     function generateRandomUserData(id: number): User {
-      const genders = ['male', 'female'];
+      const genders = ["male", "female"];
       const jobs = [
-        'Software Engineer',
-        'Data Scientist',
-        'Marketing Manager',
-        'Graphic Designer',
-        'Sales Manager',
-        'Product Manager'
+        "Software Engineer",
+        "Data Scientist",
+        "Marketing Manager",
+        "Graphic Designer",
+        "Sales Manager",
+        "Product Manager",
       ];
       const cities = [
-        'San Francisco',
-        'New York City',
-        'Los Angeles',
-        'Chicago',
-        'Houston',
-        'Phoenix',
-        'Philadelphia',
-        'San Antonio',
-        'San Diego',
-        'Dallas',
-        'San Jose',
-        'Austin',
-        'Jacksonville'
+        "San Francisco",
+        "New York City",
+        "Los Angeles",
+        "Chicago",
+        "Houston",
+        "Phoenix",
+        "Philadelphia",
+        "San Antonio",
+        "San Diego",
+        "Dallas",
+        "San Jose",
+        "Austin",
+        "Jacksonville",
       ];
       const states = [
-        'California',
-        'New York',
-        'Texas',
-        'Florida',
-        'Illinois',
-        'Pennsylvania',
-        'Ohio',
-        'Georgia',
-        'North Carolina',
-        'Michigan'
+        "California",
+        "New York",
+        "Texas",
+        "Florida",
+        "Illinois",
+        "Pennsylvania",
+        "Ohio",
+        "Georgia",
+        "North Carolina",
+        "Michigan",
       ];
 
       return {
@@ -87,17 +87,17 @@ export const fakeUsers = {
         )} ${faker.location.street()}`,
         city: faker.helpers.arrayElement(cities),
         state: faker.helpers.arrayElement(states),
-        country: 'USA',
+        country: "USA",
         zipcode: faker.location.zipCode(),
         longitude: faker.location.longitude(),
         latitude: faker.location.latitude(),
         gender: faker.helpers.arrayElement(genders) as Gender,
         date_of_birth: faker.date
-          .between({ from: '1980-01-01', to: '2000-01-01' })
+          .between({ from: "1980-01-01", to: "2000-01-01" })
           .toISOString()
-          .split('T')[0],
+          .split("T")[0],
         job: faker.helpers.arrayElement(jobs),
-        profile_picture: `https://api.slingacademy.com/public/sample-users/${id}.png`
+        profile_picture: `https://api.slingacademy.com/public/sample-users/${id}.png`,
       };
     }
 
@@ -112,7 +112,7 @@ export const fakeUsers = {
   // Get all users with optional gender filtering and search
   async getAll({
     genders = [],
-    search
+    search,
   }: {
     genders?: string[];
     search?: string;
@@ -128,15 +128,15 @@ export const fakeUsers = {
     if (search) {
       users = matchSorter(users, search, {
         keys: [
-          'first_name',
-          'last_name',
-          'email',
-          'job',
-          'city',
-          'street',
-          'state',
-          'country'
-        ]
+          "first_name",
+          "last_name",
+          "email",
+          "job",
+          "city",
+          "street",
+          "state",
+          "country",
+        ],
       });
     }
 
@@ -148,15 +148,14 @@ export const fakeUsers = {
     page = 1,
     limit = 10,
     genders,
-    search
+    search,
   }: {
     page?: number;
     limit?: number;
     genders?: string;
     search?: string;
   }) {
-    const gendersArray = genders ? genders.split('.') : [];
-    console.log('gendersArray', gendersArray);
+    const gendersArray = genders ? genders.split(".") : [];
     const allUsers = await this.getAll({ genders: gendersArray, search });
     const totalUsers = allUsers.length;
 
@@ -171,13 +170,13 @@ export const fakeUsers = {
     return {
       success: true,
       time: currentTime,
-      message: 'Sample data for testing and learning purposes',
+      message: "Sample data for testing and learning purposes",
       total_users: totalUsers,
       offset,
       limit,
-      users: paginatedUsers
+      users: paginatedUsers,
     };
-  }
+  },
 };
 
 // Initialize sample users
@@ -204,14 +203,14 @@ export const fakeProducts = {
     const sampleProducts: Product[] = [];
     function generateRandomProductData(id: number): Product {
       const categories = [
-        'Electronics',
-        'Furniture',
-        'Clothing',
-        'Toys',
-        'Groceries',
-        'Books',
-        'Jewelry',
-        'Beauty Products'
+        "Electronics",
+        "Furniture",
+        "Clothing",
+        "Toys",
+        "Groceries",
+        "Books",
+        "Jewelry",
+        "Beauty Products",
       ];
 
       return {
@@ -219,12 +218,12 @@ export const fakeProducts = {
         name: faker.commerce.productName(),
         description: faker.commerce.productDescription(),
         created_at: faker.date
-          .between({ from: '2022-01-01', to: '2023-12-31' })
+          .between({ from: "2022-01-01", to: "2023-12-31" })
           .toISOString(),
         price: parseFloat(faker.commerce.price({ min: 5, max: 500, dec: 2 })),
         photo_url: `https://api.slingacademy.com/public/sample-products/${id}.png`,
         category: faker.helpers.arrayElement(categories),
-        updated_at: faker.date.recent().toISOString()
+        updated_at: faker.date.recent().toISOString(),
       };
     }
 
@@ -239,7 +238,7 @@ export const fakeProducts = {
   // Get all products with optional category filtering and search
   async getAll({
     categories = [],
-    search
+    search,
   }: {
     categories?: string[];
     search?: string;
@@ -256,7 +255,7 @@ export const fakeProducts = {
     // Search functionality across multiple fields
     if (search) {
       products = matchSorter(products, search, {
-        keys: ['name', 'description', 'category']
+        keys: ["name", "description", "category"],
       });
     }
 
@@ -268,17 +267,17 @@ export const fakeProducts = {
     page = 1,
     limit = 10,
     categories,
-    search
+    search,
   }: {
     page?: number;
     limit?: number;
     categories?: string;
     search?: string;
   }) {
-    const categoriesArray = categories ? categories.split('.') : [];
+    const categoriesArray = categories ? categories.split(".") : [];
     const allProducts = await this.getAll({
       categories: categoriesArray,
-      search
+      search,
     });
     const totalProducts = allProducts.length;
 
@@ -293,14 +292,119 @@ export const fakeProducts = {
     return {
       success: true,
       time: currentTime,
-      message: 'Sample data for testing and learning purposes',
+      message: "Sample data for testing and learning purposes",
       total_products: totalProducts,
       offset,
       limit,
-      products: paginatedProducts
+      products: paginatedProducts,
     };
-  }
+  },
 };
 
 // Initialize sample products
 fakeProducts.initialize();
+
+// Define the shape of Kuliner data
+export type Kuliner = {
+  id: number;
+  name: string;
+  qualityRating: number;
+  priceRating: number;
+  description: string;
+  address: string;
+  workingHours: {
+    start: string;
+    stop: string;
+  };
+  workingDays: string;
+  gmapsLink: string;
+  imageUrls: string[];
+  createdAt: string;
+};
+
+// Mock kuliner data store
+export const fakeKuliner = {
+  records: [] as Kuliner[], // Holds the list of kuliner objects
+
+  // Initialize with sample data
+  initialize() {
+    const sampleKuliner: Kuliner[] = [];
+    function generateRandomKulinerData(id: number): Kuliner {
+      const workingHours = {
+        start: `${faker.number.int({ min: 6, max: 10 })}:00`, // Random start time between 6:00 - 10:00
+        stop: `${faker.number.int({ min: 18, max: 22 })}:00`, // Random stop time between 18:00 - 22:00
+      };
+
+      return {
+        id,
+        name: faker.company.name(),
+        qualityRating: faker.number.int({ min: 1, max: 5 }),
+        priceRating: faker.number.int({ min: 1, max: 5 }),
+        description: faker.commerce.productDescription(),
+        address: faker.location.streetAddress(),
+        workingHours,
+        workingDays: "Monday-Saturday",
+        gmapsLink: faker.internet.url(),
+        imageUrls: [
+          `https://api.slingacademy.com/public/sample-images/${id}.jpg`,
+        ],
+        createdAt: faker.date.past().toISOString(),
+      };
+    }
+
+    // Generate 20 sample kuliner records
+    for (let i = 1; i <= 20; i++) {
+      sampleKuliner.push(generateRandomKulinerData(i));
+    }
+
+    this.records = sampleKuliner;
+  },
+
+  // Get all kuliner data with optional search
+  async getAll({ search }: { search?: string }) {
+    let kuliner = [...this.records];
+
+    // Search functionality across multiple fields
+    if (search) {
+      kuliner = matchSorter(kuliner, search, {
+        keys: ["name", "description", "address"],
+      });
+    }
+
+    return kuliner;
+  },
+
+  // Get paginated results with optional search
+  async getKuliner({
+    page = 1,
+    limit = 10,
+    search,
+  }: {
+    page?: number;
+    limit?: number;
+    search?: string;
+  }) {
+    const allKuliner = await this.getAll({ search });
+    const totalKuliner = allKuliner.length;
+
+    // Pagination logic
+    const offset = (page - 1) * limit;
+    const paginatedKuliner = allKuliner.slice(offset, offset + limit);
+
+    // Mock current time
+    const currentTime = new Date().toISOString();
+    // Return paginated response
+    return {
+      success: true,
+      time: currentTime,
+      message: "Sample kuliner data for testing and learning purposes",
+      total_kuliner: totalKuliner,
+      offset,
+      limit,
+      kuliner: paginatedKuliner,
+    };
+  },
+};
+
+// Initialize sample kuliner records
+fakeKuliner.initialize();

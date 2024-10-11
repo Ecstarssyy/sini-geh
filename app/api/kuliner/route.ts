@@ -78,13 +78,37 @@ export async function GET(request: NextRequest) {
   const db = getFirestore(firebaseAdminApp);
 
   try {
-    const snapshot = await db.collection("kuliner").get();
+    const url = new URL(request.url);
+    const page = parseInt(url.searchParams.get('page') || '1', 10);
+    const limit = parseInt(url.searchParams.get('limit') || '10', 10);
+    const search = url.searchParams.get('search') || ""; // Ambil query pencarian
+    const offset = (page - 1) * limit;
+
+    let query = db.collection("kuliner")
+      .orderBy("createdAt", "desc")
+      .offset(offset)
+      .limit(limit);
+
+    if (search) {
+      // Lakukan pencarian berdasarkan nama (misalnya)
+      query = query.where('name', '>=', search).where('name', '<=', search + '\uf8ff');
+    }
+
+    const snapshot = await query.get();
+    const totalItemsSnapshot = await db.collection("kuliner").get();
+    const totalItems = totalItemsSnapshot.size;
+
     const kulinerList = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
 
-    return NextResponse.json(kulinerList);
+    return NextResponse.json({
+      kuliner: kulinerList,
+      totalItems: totalItems,
+      currentPage: page,
+      totalPages: Math.ceil(totalItems / limit),
+    });
   } catch (error) {
     console.error("Error fetching kuliner:", error);
     return NextResponse.json(

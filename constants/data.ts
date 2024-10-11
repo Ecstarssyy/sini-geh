@@ -9,6 +9,26 @@ export type User = {
   status: string;
 };
 
+export type Kuliner = {
+  id: string;
+  createdAt: {
+    _seconds: number;
+    _nanoseconds: number;
+  };
+  address: string;
+  gmapsLink: string;
+  workingDays: string;
+  imageUrls: string[];
+  name: string;
+  description: string;
+  qualityRating: number;
+  workingHours: {
+    start: string;
+    stop: string;
+  };
+  priceRating: number;
+};
+
 export type Employee = {
   id: number;
   first_name: string;
@@ -36,9 +56,9 @@ export const navItems: NavItem[] = [
     label: "Dashboard",
   },
   {
-    title: "Berita",
-    href: "/dashboard/berita",
-    icon: "user",
+    title: "Kuliner",
+    href: "/dashboard/kuliner",
+    icon: "pizza",
     label: "berita",
   },
 ];

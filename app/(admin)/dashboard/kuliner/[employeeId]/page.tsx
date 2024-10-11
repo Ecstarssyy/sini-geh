@@ -1,9 +1,9 @@
-import { EmployeeViewPage } from '@/sections/employee/views';
+import { KulinerViewPage } from '@/sections/kuliner/views';
 
 export const metadata = {
   title: 'Dashboard : Employee View'
 };
 
 export default function Page() {
-  return <EmployeeViewPage />;
+  return <KulinerViewPage />;
 }

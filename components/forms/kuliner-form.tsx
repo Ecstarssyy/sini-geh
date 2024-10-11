@@ -1,3 +1,5 @@
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -6,7 +8,13 @@ import axios from "axios";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import imageCompression from "browser-image-compression";
 import { Progress } from "../ui/progress";
 
@@ -106,10 +114,7 @@ const KulinerForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <div className="w-fit">
           <label>Gambar Kuliner</label>
-          <Input
-            type="file"
-            onChange={handleFileChange}
-          />
+          <Input type="file" onChange={handleFileChange} />
           {thumbnailPreview && (
             <img
               src={thumbnailPreview}
@@ -122,7 +127,9 @@ const KulinerForm = () => {
         <div>
           <label>Nama Kuliner</label>
           <Input {...register("namaKuliner")} />
-          {errors.namaKuliner && <ErrorLabel message={errors.namaKuliner.message} />}
+          {errors.namaKuliner && (
+            <ErrorLabel message={errors.namaKuliner.message} />
+          )}
         </div>
 
         <div>
@@ -156,13 +163,17 @@ const KulinerForm = () => {
               ))}
             </SelectContent>
           </Select>
-          {errors.ratingHarga && <ErrorLabel message={errors.ratingHarga.message} />}
+          {errors.ratingHarga && (
+            <ErrorLabel message={errors.ratingHarga.message} />
+          )}
         </div>
 
         <div>
           <label>Deskripsi</label>
           <Textarea {...register("deskripsi")} />
-          {errors.deskripsi && <ErrorLabel message={errors.deskripsi.message} />}
+          {errors.deskripsi && (
+            <ErrorLabel message={errors.deskripsi.message} />
+          )}
         </div>
 
         <div>
@@ -180,19 +191,25 @@ const KulinerForm = () => {
         <div>
           <label>Jam Kerja Selesai</label>
           <Input type="time" {...register("jamSelesai")} />
-          {errors.jamSelesai && <ErrorLabel message={errors.jamSelesai.message} />}
+          {errors.jamSelesai && (
+            <ErrorLabel message={errors.jamSelesai.message} />
+          )}
         </div>
 
         <div>
           <label>Hari Kerja</label>
           <Input {...register("hariKerja")} />
-          {errors.hariKerja && <ErrorLabel message={errors.hariKerja.message} />}
+          {errors.hariKerja && (
+            <ErrorLabel message={errors.hariKerja.message} />
+          )}
         </div>
 
         <div>
           <label>Link GMaps</label>
           <Input {...register("linkGmaps")} />
-          {errors.linkGmaps && <ErrorLabel message={errors.linkGmaps.message} />}
+          {errors.linkGmaps && (
+            <ErrorLabel message={errors.linkGmaps.message} />
+          )}
         </div>
 
         <div className={uploading ? "" : "invisible"}>
