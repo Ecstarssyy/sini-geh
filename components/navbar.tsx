@@ -1,24 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
-import { MapPin, Menu, X } from "lucide-react"; // Ikon dari lucide-react, bisa diganti dengan ikon favorit
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 type NavLink = {
   name: string;
   href: string;
 };
 
-const navLinks: NavLink[] = [
-  { name: "Beranda", href: "/" },
-  { name: "Rekomendasi", href: "/rekomendasi" },
-];
-
 const Navbar: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const pathname = usePathname();
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  useEffect(() => {
+    console.log(pathname);
+  });
+
+  const isActive = (urls: string[]) => {
+    return urls.some(
+      (url) => pathname === url || pathname?.startsWith(url + "/")
+    );
   };
 
   return (
@@ -40,14 +47,23 @@ const Navbar: React.FC = () => {
           <ul className="flex gap-6 ml-8 mr-4">
             <li>
               <a
-                href="#"
-                className="text-white hover:text-yellow-300 text-lg left-1"
+                href="/"
+                className={`${
+                  isActive(["/"]) ? "text-yellow-400 font-bold" : "text-white"
+                } text-white hover:text-yellow-300 text-lg left-1`}
               >
                 Beranda
               </a>
             </li>
             <li>
-              <a href="#" className="text-yellow-400 font-bold text-lg">
+              <a
+                href="rekomendasi"
+                className={`${
+                  isActive(["/rekomendasi", "/detail", "/rekomendasi_2"])
+                    ? "text-yellow-400 font-bold"
+                    : "text-white"
+                }  text-lg`}
+              >
                 Rekomendasi
               </a>
             </li>

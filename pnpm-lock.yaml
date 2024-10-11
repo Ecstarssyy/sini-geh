@@ -4,6 +4,7 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+<<<<<<< HEAD
 importers:
 
   .:
@@ -180,6 +181,179 @@ importers:
       tailwindcss:
         specifier: ^3.4.10
         version: 3.4.11
+=======
+dependencies:
+  '@firebase/app':
+    specifier: ^0.10.10
+    version: 0.10.10
+  '@firebase/app-check':
+    specifier: ^0.8.7
+    version: 0.8.7(@firebase/app@0.10.10)
+  '@firebase/util':
+    specifier: ^1.9.7
+    version: 1.9.7
+  '@hookform/resolvers':
+    specifier: ^3.9.0
+    version: 3.9.0(react-hook-form@7.53.0)
+  '@iconify/react':
+    specifier: ^5.0.2
+    version: 5.0.2(react@18.2.0)
+  '@next/font':
+    specifier: ^14.2.13
+    version: 14.2.13(next@14.2.3)
+  '@radix-ui/react-accordion':
+    specifier: ^1.2.0
+    version: 1.2.0(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-alert-dialog':
+    specifier: ^1.1.1
+    version: 1.1.1(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-avatar':
+    specifier: ^1.1.0
+    version: 1.1.0(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-dialog':
+    specifier: ^1.1.1
+    version: 1.1.1(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-dropdown-menu':
+    specifier: ^2.1.1
+    version: 2.1.1(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-icons':
+    specifier: ^1.3.0
+    version: 1.3.0(react@18.2.0)
+  '@radix-ui/react-label':
+    specifier: ^2.1.0
+    version: 2.1.0(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-popover':
+    specifier: ^1.1.1
+    version: 1.1.1(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-progress':
+    specifier: ^1.1.0
+    version: 1.1.0(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-scroll-area':
+    specifier: ^1.1.0
+    version: 1.1.0(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-select':
+    specifier: ^2.1.1
+    version: 2.1.1(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-separator':
+    specifier: ^1.1.0
+    version: 1.1.0(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-slot':
+    specifier: ^1.1.0
+    version: 1.1.0(@types/react@18.0.25)(react@18.2.0)
+  '@radix-ui/react-switch':
+    specifier: ^1.1.0
+    version: 1.1.0(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-tabs':
+    specifier: ^1.1.0
+    version: 1.1.0(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-toast':
+    specifier: ^1.2.1
+    version: 1.2.1(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@radix-ui/react-tooltip':
+    specifier: ^1.1.2
+    version: 1.1.2(@types/react-dom@18.0.9)(@types/react@18.0.25)(react-dom@18.2.0)(react@18.2.0)
+  '@tanstack/react-table':
+    specifier: ^8.20.5
+    version: 8.20.5(react-dom@18.2.0)(react@18.2.0)
+  '@types/node':
+    specifier: 18.11.9
+    version: 18.11.9
+  '@types/react':
+    specifier: 18.0.25
+    version: 18.0.25
+  '@types/react-dom':
+    specifier: 18.0.9
+    version: 18.0.9
+  axios:
+    specifier: ^1.7.7
+    version: 1.7.7
+  browser-image-compression:
+    specifier: ^2.0.2
+    version: 2.0.2
+  class-variance-authority:
+    specifier: ^0.7.0
+    version: 0.7.0
+  clsx:
+    specifier: ^2.1.1
+    version: 2.1.1
+  date-fns:
+    specifier: ^3.6.0
+    version: 3.6.0
+  embla-carousel-react:
+    specifier: ^8.3.0
+    version: 8.3.0(react@18.2.0)
+  firebase:
+    specifier: ^10.4.0
+    version: 10.13.1
+  firebase-admin:
+    specifier: ^11.10.1
+    version: 11.11.1
+  lucide-react:
+    specifier: ^0.438.0
+    version: 0.438.0(react@18.2.0)
+  next:
+    specifier: 14.2.3
+    version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
+  next-firebase-auth-edge:
+    specifier: 1.6.1
+    version: 1.6.1(next@14.2.3)
+  next-themes:
+    specifier: ^0.3.0
+    version: 0.3.0(react-dom@18.2.0)(react@18.2.0)
+  nextjs-toploader:
+    specifier: ^3.6.15
+    version: 3.6.15(next@14.2.3)(react-dom@18.2.0)(react@18.2.0)
+  react:
+    specifier: 18.2.0
+    version: 18.2.0
+  react-day-picker:
+    specifier: 8.10.1
+    version: 8.10.1(date-fns@3.6.0)(react@18.2.0)
+  react-dom:
+    specifier: 18.2.0
+    version: 18.2.0(react@18.2.0)
+  react-hook-form:
+    specifier: ^7.53.0
+    version: 7.53.0(react@18.2.0)
+  react-loading-hook:
+    specifier: ^1.0.0
+    version: 1.1.2(react-dom@18.2.0)(react@18.2.0)
+  recharts:
+    specifier: ^2.12.7
+    version: 2.12.7(react-dom@18.2.0)(react@18.2.0)
+  tailwind-merge:
+    specifier: ^2.5.2
+    version: 2.5.2
+  tailwindcss-animate:
+    specifier: ^1.0.7
+    version: 1.0.7(tailwindcss@3.4.11)
+  typescript:
+    specifier: 5.2.2
+    version: 5.2.2
+  uuid:
+    specifier: ^10.0.0
+    version: 10.0.0
+  zod:
+    specifier: ^3.23.8
+    version: 3.23.8
+  zustand:
+    specifier: ^4.5.5
+    version: 4.5.5(@types/react@18.0.25)(react@18.2.0)
+
+devDependencies:
+  '@types/uuid':
+    specifier: ^10.0.0
+    version: 10.0.0
+  autoprefixer:
+    specifier: ^10.4.20
+    version: 10.4.20(postcss@8.4.45)
+  postcss:
+    specifier: ^8.4.43
+    version: 8.4.45
+  tailwindcss:
+    specifier: ^3.4.10
+    version: 3.4.11
+>>>>>>> origin/Mengan-Pai
 
 packages:
 
@@ -4226,7 +4400,18 @@ snapshots:
       '@types/node': 18.11.9
       '@types/send': 0.17.4
 
+<<<<<<< HEAD
   abort-controller@3.0.0:
+=======
+  /@types/uuid@10.0.0:
+    resolution: {integrity: sha512-7gqG38EyHgyP1S+7+xomFtL+ZNHcKv6DwNaCZmJmo1vgMugyF3TCnXVg4t1uk89mLNwnLtnY3TpOpCOyp1/xHQ==}
+    dev: true
+
+  /abort-controller@3.0.0:
+    resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
+    engines: {node: '>=6.5'}
+    requiresBuild: true
+>>>>>>> origin/Mengan-Pai
     dependencies:
       event-target-shim: 5.0.1
     optional: true
@@ -4498,7 +4683,34 @@ snapshots:
 
   electron-to-chromium@1.5.21: {}
 
+<<<<<<< HEAD
   emoji-regex@8.0.0: {}
+=======
+  /embla-carousel-react@8.3.0(react@18.2.0):
+    resolution: {integrity: sha512-P1FlinFDcIvggcErRjNuVqnUR8anyo8vLMIH8Rthgofw7Nj8qTguCa2QjFAbzxAUTQTPNNjNL7yt0BGGinVdFw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.1 || ^18.0.0
+    dependencies:
+      embla-carousel: 8.3.0
+      embla-carousel-reactive-utils: 8.3.0(embla-carousel@8.3.0)
+      react: 18.2.0
+    dev: false
+
+  /embla-carousel-reactive-utils@8.3.0(embla-carousel@8.3.0):
+    resolution: {integrity: sha512-EYdhhJ302SC4Lmkx8GRsp0sjUhEN4WyFXPOk0kGu9OXZSRMmcBlRgTvHcq8eKJE1bXWBsOi1T83B+BSSVZSmwQ==}
+    peerDependencies:
+      embla-carousel: 8.3.0
+    dependencies:
+      embla-carousel: 8.3.0
+    dev: false
+
+  /embla-carousel@8.3.0:
+    resolution: {integrity: sha512-Ve8dhI4w28qBqR8J+aMtv7rLK89r1ZA5HocwFz6uMB/i5EiC7bGI7y+AM80yAVUJw3qqaZYK7clmZMUR8kM3UA==}
+    dev: false
+
+  /emoji-regex@8.0.0:
+    resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+>>>>>>> origin/Mengan-Pai
 
   emoji-regex@9.2.2: {}
 
@@ -5656,7 +5868,20 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
+<<<<<<< HEAD
   uuid@8.3.2:
+=======
+  /uuid@10.0.0:
+    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
+    hasBin: true
+    dev: false
+
+  /uuid@8.3.2:
+    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
+    requiresBuild: true
+    dev: false
+>>>>>>> origin/Mengan-Pai
     optional: true
 
   uuid@9.0.1: {}
