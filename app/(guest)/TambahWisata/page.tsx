@@ -1,9 +1,8 @@
 // App.js
 import { CalendarForm } from "@/components/calender";
-import { RadioGroup } from "@radix-ui/react-dropdown-menu";
-import { RadioGroupItem } from "@radix-ui/react-radio-group";
 import React from "react";
-import { Label } from "recharts";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 function App() {
   return (
@@ -49,19 +48,31 @@ function App() {
         </div>
         <div className="mb-4">
           <label className="block mb-2">Rating</label>
-          <RadioGroup/> 
-          <div className="flex items-center">
-            <input
-              type="text"
-              className="w-24 p-2 rounded bg-green-200 text-green-900 mr-2"
-              value="4.5"
-            />
-            <i className="fas fa-star text-yellow-500"></i>
-            <i className="fas fa-star text-yellow-500"></i>
-            <i className="fas fa-star text-yellow-500"></i>
-            <i className="fas fa-star text-yellow-500"></i>
-            <i className="fas fa-star-half-alt text-yellow-500"></i>
-          </div>
+          <RadioGroup defaultValue="option-one">
+            <div className="flex justify-between">
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="option-one" id="option-one" />
+                <Label htmlFor="option-one">1</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="option-two" id="option-two" />
+                <Label htmlFor="option-two">2</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="option-three" id="option-three" />
+                <Label htmlFor="option-three">3</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="option-four" id="option-four" />
+                <Label htmlFor="option-four">4</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="option-five" id="option-five" />
+                <Label htmlFor="option-five">5</Label>
+              </div>
+            </div>
+          </RadioGroup>
+          
         </div>
         <div className="mb-4">
           <label className="block mb-2">Harga Wisata</label>
@@ -135,9 +146,9 @@ function App() {
             <button className="bg-[#DAF1DF] text-black w-[150px] py-1 rounded-full">
               + Tambah Review
             </button>
-            </div>
-            <textarea className="w-full p-2 rounded bg-green-200 text-green-900"></textarea>
           </div>
+          <textarea className="w-full p-2 rounded bg-green-200 text-green-900"></textarea>
+        </div>
         <button className="  bg-green-700 text-green-100  py-2 px-4 rounded">
           Kirim
         </button>
