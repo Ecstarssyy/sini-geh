@@ -1,6 +1,5 @@
 "use client";
 
-import CardKuliner from "@/components/card-kuliner";
 import Pagination from "@/components/pagination";
 import React from "react";
 import { Input } from "@/components/ui/input";
@@ -40,15 +39,15 @@ function Page() {
       </div>
 
       <div className="flex flex-wrap gap-20 justify-center items-center py-2 ">
+        {/* <CardKuliner />
         <CardKuliner />
-        <CardKuliner />
-        <CardKuliner />
+        <CardKuliner /> */}
       </div>
 
       <div className="flex flex-wrap gap-20 justify-center items-center py-8 ">
+        {/* <CardKuliner />
         <CardKuliner />
-        <CardKuliner />
-        <CardKuliner />
+        <CardKuliner /> */}
       </div>
 
       <Pagination />
