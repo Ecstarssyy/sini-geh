@@ -11,7 +11,7 @@ const formatDate = (seconds: number, nanoseconds: number) => {
   return format(date, "dd MMM yyyy");
 };
 
-export const columns: ColumnDef<Kuliner>[] = [
+export const generateColumns = (onRefresh: () => void) :ColumnDef<Kuliner>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -87,6 +87,6 @@ export const columns: ColumnDef<Kuliner>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <CellAction data={row.original} />,
+    cell: ({ row }) => <CellAction onRefresh={onRefresh} data={row.original} />,
   },
 ];

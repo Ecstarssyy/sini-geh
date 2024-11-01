@@ -21,7 +21,18 @@ export async function POST(request: NextRequest) {
     const gmapsLink = formData.get("gmapsLink") as string;
     const images = formData.getAll("images") as File[];
 
-    if (!name || !qualityRating || !priceRating || !description || !address || !workingHoursStart || !workingHoursStop || !workingDays || !gmapsLink || images.length === 0) {
+    if (
+      !name ||
+      !qualityRating ||
+      !priceRating ||
+      !description ||
+      !address ||
+      !workingHoursStart ||
+      !workingHoursStop ||
+      !workingDays ||
+      !gmapsLink ||
+      images.length === 0
+    ) {
       return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
 
@@ -40,7 +51,11 @@ export async function POST(request: NextRequest) {
       // Set file gambar menjadi publik
       await imageRef.makePublic();
 
-      imageUrls.push(`https://storage.googleapis.com/${storage.bucket().name}/${imageFileName}`);
+      imageUrls.push(
+        `https://storage.googleapis.com/${
+          storage.bucket().name
+        }/${imageFileName}`
+      );
     }
 
     // Menyimpan data kuliner ke Firestore
@@ -79,35 +94,58 @@ export async function GET(request: NextRequest) {
 
   try {
     const url = new URL(request.url);
-    const page = parseInt(url.searchParams.get('page') || '1', 10);
-    const limit = parseInt(url.searchParams.get('limit') || '10', 10);
-    const search = url.searchParams.get('search') || ""; // Ambil query pencarian
+    const page = parseInt(url.searchParams.get("page") || "1", 10);
+    const limit = parseInt(url.searchParams.get("limit") || "10", 10);
+    const search = url.searchParams.get("search") || ""; // Ambil query pencarian
+    const isRandom = url.searchParams.get("random") === "true"; // Cek apakah random mode diaktifkan
     const offset = (page - 1) * limit;
 
-    let query = db.collection("kuliner")
-      .orderBy("createdAt", "desc")
-      .offset(offset)
-      .limit(limit);
+    let kulinerList = [];
+    let totalItems = 0;
 
-    if (search) {
-      // Lakukan pencarian berdasarkan nama (misalnya)
-      query = query.where('name', '>=', search).where('name', '<=', search + '\uf8ff');
+    if (isRandom) {
+      // Mode random: ambil semua data lalu pilih secara acak
+      const snapshot = await db.collection("kuliner").get();
+      totalItems = snapshot.size;
+
+      const allData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      // Shuffle array dan ambil jumlah item sesuai limit
+      kulinerList = allData.sort(() => 0.5 - Math.random()).slice(0, limit);
+    } else {
+      // Mode normal: ambil berdasarkan page, limit, dan search
+      let snapshot;
+      if (search) {
+        snapshot = await db
+          .collection("kuliner")
+          .orderBy("createdAt", "desc")
+          .get();
+      } else {
+        snapshot = await db
+          .collection("kuliner")
+          .orderBy("createdAt", "desc")
+          .offset(offset)
+          .limit(limit)
+          .get();
+      }
+
+      const totalItemsSnapshot = await db.collection("kuliner").get();
+      totalItems = totalItemsSnapshot.size;
+
+      kulinerList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
     }
-
-    const snapshot = await query.get();
-    const totalItemsSnapshot = await db.collection("kuliner").get();
-    const totalItems = totalItemsSnapshot.size;
-
-    const kulinerList = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
 
     return NextResponse.json({
       kuliner: kulinerList,
       totalItems: totalItems,
-      currentPage: page,
-      totalPages: Math.ceil(totalItems / limit),
+      currentPage: isRandom ? null : page, // Tidak ada page jika mode random
+      totalPages: isRandom ? null : Math.ceil(totalItems / limit),
     });
   } catch (error) {
     console.error("Error fetching kuliner:", error);

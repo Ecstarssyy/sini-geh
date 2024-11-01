@@ -10,7 +10,8 @@ function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? ""; // Mendapatkan path URL saat ini
 
   // Menentukan halaman yang tidak ingin menggunakan layout
-  const excludedRoutes = ["/login", "/"];
+  const excludedRoutes = ["/login"];
+  const excludedFooterRoutes = ["/"];
 
   // Jika path saat ini termasuk dalam excludedRoutes, jangan tampilkan layout
   if (excludedRoutes.includes(pathname)) {
@@ -18,13 +19,13 @@ function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div>
+    <div className="min-h-screen relative flex flex-col items-center">
       <Toaster />
       <Navbar />
-      <div className="w-full py-8 flex items-center justify-center">
+      <div className=" flex pt-8">
         <div className="container">{children}</div>
       </div>
-      <Footer />
+      {!excludedFooterRoutes.includes(pathname) && <Footer />}
     </div>
   );
 }

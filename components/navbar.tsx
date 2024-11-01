@@ -2,7 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "./ui/button";
+import { Lock } from "lucide-react";
 
 type NavLink = {
   name: string;
@@ -13,6 +15,8 @@ const Navbar: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const pathname = usePathname();
+
+  const router = useRouter();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -30,46 +34,56 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className="translate-x-5 py-1 flex items-center rounded-r-full w-full justify-center">
-        {/* Logo */}
-        <div className="flex items-center translate-x-2">
-          <Image
-            src="/images/logomangkok.png"
-            alt="Mengan Pai"
-            className="w-16 mr-1"
-            width={1080}
-            height={1080}
-          />
-        </div>
+      <div className="w-full">
+        <div className="container relative mx-auto">
+          <Button
+            variant="outline"
+            onClick={() => router.push("/login")}
+            className="absolute top-1 right-0 py-5 z-50 hidden md:flex"
+          >
+            <Lock className="mr-2" /> Admin Login
+          </Button>
 
-        {/* Navigation Links */}
-        <div className="bg-[#4D2B28] -z-10 -translate-x-14 pl-16 pr-8 flex items-center justify-center rounded-full py-2">
-          <ul className="flex gap-6 ml-8 mr-4">
-            <li>
-              <a
-                href="/"
-                className={`${
-                  isActive(["/"]) ? "text-yellow-400 font-bold" : "text-white"
-                } text-white hover:text-yellow-300 text-lg left-1`}
-              >
-                Beranda
-              </a>
-            </li>
-            <li>
-              <a
-                href="rekomendasi"
-                className={`${
-                  isActive(["/rekomendasi", "/detail", "/rekomendasi_2"])
-                    ? "text-yellow-400 font-bold"
-                    : "text-white"
-                }  text-lg`}
-              >
-                Rekomendasi
-              </a>
-            </li>
-          </ul>
+          <nav className="mt-8 py-1 flex items-center rounded-r-full w-full justify-center">
+            {/* Navigation Links */}
+            <div className="relative bg-[#4D2B28] pl-16 flex items-center justify-center rounded-full py-2">
+              <Image
+                src="/images/logomangkok.png"
+                alt="Mengan Pai"
+                className="w-[80px] absolute left-0"
+                width={1080}
+                height={1080}
+              />
+              <ul className="flex gap-6 ml-8 mr-4">
+                <li>
+                  <a
+                    href="/"
+                    className={`text-sm ${
+                      isActive(["/"])
+                        ? "text-yellow-400 font-bold"
+                        : "text-white"
+                    } text-white hover:text-yellow-300 left-1`}
+                  >
+                    Beranda
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="rekomendasi"
+                    className={`text-sm ${
+                      isActive(["/rekomendasi", "/detail", "/rekomendasi_2"])
+                        ? "text-yellow-400 font-bold"
+                        : "text-white"
+                    }  `}
+                  >
+                    Rekomendasi
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
         </div>
-      </nav>
+      </div>
     </>
   );
 };

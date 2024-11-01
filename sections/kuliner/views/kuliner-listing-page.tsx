@@ -27,9 +27,7 @@ export default function KulinerListingPage() {
   const [genderFilter, setGenderFilter] = useState<string | null>(null); // Filter state
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch data based on current pagination, search, and filters
-  useEffect(() => {
-    async function fetchData() {
+  const fetchData = async () => {
       setIsLoading(true);
       try {
         const params = {
@@ -49,8 +47,10 @@ export default function KulinerListingPage() {
       } finally {
         setIsLoading(false);
       }
-    }
+  }
 
+  // Fetch data based on current pagination, search, and filters
+  useEffect(() => {
     fetchData();
   }, [currentPage, pageSize, searchQuery, genderFilter]);
 
@@ -85,6 +85,7 @@ export default function KulinerListingPage() {
           genderFilter={genderFilter}
           setGenderFilter={setGenderFilter}
           isLoading={isLoading}
+          onRefresh={fetchData}
         />
       </div>
     </PageContainer>

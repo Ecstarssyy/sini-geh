@@ -1,38 +1,84 @@
+"use client";
+
 import CardKuliner from "@/components/card-kuliner";
-import TombolCustom2 from "@/components/tombol-custom2";
-import React from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import { RotateCw } from "lucide-react";
+import SearchBar from "@/components/search-bar";
+import SkeletonCard from "@/components/skeleton-kuliner-card";
+
+interface Kuliner {
+  id: string;
+  address: string;
+  gmapsLink: string;
+  workingDays: string;
+  imageUrls: string[];
+  name: string;
+  description: string;
+  qualityRating: number;
+  workingHours: {
+    start: string;
+    stop: string;
+  };
+  priceRating: number;
+}
 
 function Page() {
+  const [data, setData] = useState<Kuliner[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("/api/kuliner?limit=3&random=true");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const result = await response.json();
+      setData(result.kuliner); // Menyimpan data kuliner dari respons API
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <div> 
-      <div className="bg-gradient-to-l from-[#E76824] to-[#4D2B28] rounded-3xl p-4 flex justify-between items-center shadow-lg">
-      {/* Text Content */}
-      <div className="text-left">
-        <h2 className="text-yellow-400 font-bold text-2xl mb-2">
-          Nih rekomendasi kuliner yang ada di sekitar Bandar Lampung...
-        </h2>
-        <button className="bg-white text-[#4D2B28] font-semibold py-2 px-4 rounded-md shadow-md hover:bg-gray-100 transition-all">
-          Jelajahi Kuliner Lainnya →
-        </button>
+    <div className="flex flex-col items-center gap-8">
+      <SearchBar />
+
+      <div className="bg-gradient-to-l shadow-xl from-[#E76824] to-[#4D2B28] rounded-3xl p-4 flex justify-between items-center shadow-lg">
+        {/* Text Content */}
+        <div className="text-left p-5">
+          <h2 className="text-yellow-400 font-bold text-4xl mb-2">
+            Ini adalah kuliner lampung yang kami rekomendasikan, semoga kamu
+            suka ya..
+          </h2>
+
+          <button
+            onClick={fetchData}
+            className="flex gap-2 bg-white mt-5 text-[#4D2B28] font-semibold py-2 px-4 rounded-md shadow-md hover:bg-gray-100 transition-all"
+          >
+            Cari lagi
+            <RotateCw />
+          </button>
+        </div>
+
+        {/* Image */}
+        <div className="rounded-xl overflow-hidden">
+          <img src="/images/kuliner.png" alt="Kuliner Image" />
+        </div>
       </div>
 
-      {/* Image */}
-      <div className="rounded-xl overflow-hidden">
-        <img
-          src="/images/kuliner.png "
-        />
-      </div>
-    </div>
-  
       <div className="flex flex-wrap gap-20 justify-center items-center py-8 ">
-        <CardKuliner />
-        <CardKuliner />
-        <CardKuliner />
-      </div>
-
-      <div className="flex w-full justify-center items-center mb-6">
-        <TombolCustom2 />
+        {loading
+          ? Array.from({ length: 3 }).map((_, index) => (
+              <SkeletonCard key={index} />
+            ))
+          : data.map((item) => <CardKuliner key={item.id} data={item} />)}
       </div>
     </div>
   );

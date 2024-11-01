@@ -5,8 +5,8 @@ import { DataTableFilterBox } from "@/components/ui/table/data-table-filter-box"
 import { DataTableResetFilter } from "@/components/ui/table/data-table-reset-filter";
 import { DataTableSearch } from "@/components/ui/table/data-table-search";
 import { Kuliner } from "@/constants/data";
-import { columns } from "./columns";
 import { GENDER_OPTIONS } from "./use-kuliner-table-filters";
+import { generateColumns } from "./columns";
 
 interface KulinerTableProps {
   data: Kuliner[];
@@ -20,6 +20,7 @@ interface KulinerTableProps {
   genderFilter: string | null;
   setGenderFilter: (filter: string | null) => void;
   isLoading: boolean;
+  onRefresh: () => void;
 }
 
 export default function KulinerTable({
@@ -34,8 +35,11 @@ export default function KulinerTable({
   genderFilter,
   setGenderFilter,
   isLoading,
+  onRefresh
 }: KulinerTableProps) {
   const isAnyFilterActive = !!(searchQuery || genderFilter); // Check if any filter is active
+
+  const columns = generateColumns(onRefresh);
 
   return (
     <div className="space-y-4">
@@ -58,6 +62,7 @@ export default function KulinerTable({
           }}
         />
       </div>
+
 
       {/* Table component */}
       <DataTable

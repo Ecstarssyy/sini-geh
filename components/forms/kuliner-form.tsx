@@ -1,34 +1,33 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import axios from "axios";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 import imageCompression from "browser-image-compression";
 import { Progress } from "../ui/progress";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 // Zod schema untuk validasi
 const kulinerSchema = z.object({
-  namaKuliner: z.string().min(1, { message: "Nama kuliner is required" }),
-  rating: z.string().min(1, { message: "Rating is required" }),
-  ratingHarga: z.string().min(1, { message: "Rating harga is required" }),
-  deskripsi: z.string().min(1, { message: "Deskripsi is required" }),
-  alamat: z.string().min(1, { message: "Alamat is required" }),
-  jamMulai: z.string().min(1, { message: "Jam kerja mulai is required" }),
-  jamSelesai: z.string().min(1, { message: "Jam kerja selesai is required" }),
-  hariKerja: z.string().min(1, { message: "Hari kerja is required" }),
-  linkGmaps: z.string().min(1, { message: "Link GMaps is required" }),
+  name: z.string().min(1, { message: "Nama kuliner is required" }),
+  qualityRating: z.string().min(1, { message: "Rating is required" }),
+  priceRating: z.string().min(1, { message: "Rating harga is required" }),
+  description: z.string().min(1, { message: "Deskripsi is required" }),
+  address: z.string().min(1, { message: "Alamat is required" }),
+  workingHoursStart: z
+    .string()
+    .min(1, { message: "Jam kerja mulai is required" }),
+  workingHoursStop: z
+    .string()
+    .min(1, { message: "Jam kerja selesai is required" }),
+  workingDays: z.string().min(1, { message: "Hari kerja is required" }),
+  gmapsLink: z.string().min(1, { message: "Link GMaps is required" }),
 });
 
 type KulinerFormValues = z.infer<typeof kulinerSchema>;
@@ -37,13 +36,16 @@ const KulinerForm = () => {
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const { toast } = useToast();
+
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<KulinerFormValues>({
-    resolver: zodResolver(kulinerSchema), // Validasi zod
+    resolver: zodResolver(kulinerSchema),
   });
 
   const ErrorLabel = ({ message }: { message?: string }) => {
@@ -53,33 +55,42 @@ const KulinerForm = () => {
   // Fungsi pengiriman form
   const onSubmit = async (data: KulinerFormValues) => {
     setUploading(true);
-
     const formData = new FormData();
-    formData.append("namaKuliner", data.namaKuliner);
-    formData.append("rating", data.rating);
-    formData.append("ratingHarga", data.ratingHarga);
-    formData.append("deskripsi", data.deskripsi);
-    formData.append("alamat", data.alamat);
-    formData.append("jamMulai", data.jamMulai);
-    formData.append("jamSelesai", data.jamSelesai);
-    formData.append("hariKerja", data.hariKerja);
-    formData.append("linkGmaps", data.linkGmaps);
+    formData.append("name", data.name);
+    formData.append("qualityRating", data.qualityRating);
+    formData.append("priceRating", data.priceRating);
+    formData.append("description", data.description);
+    formData.append("address", data.address);
+    formData.append("workingHoursStart", data.workingHoursStart);
+    formData.append("workingHoursStop", data.workingHoursStop);
+    formData.append("workingDays", data.workingDays);
+    formData.append("gmapsLink", data.gmapsLink);
 
     // Hanya menambahkan file jika file tersedia
     if (thumbnailFile) {
-      formData.append("thumbnailFile", thumbnailFile);
+      formData.append("images", thumbnailFile); // Perbaikan nama field
     }
 
     try {
       const response = await fetch("/api/kuliner", {
         method: "POST",
-        body: formData, // Mengirim FormData
+        body: formData,
       });
 
       const result = await response.json();
       if (response.ok) {
+        toast({
+          title: "Sukses ",
+          description: "Sukses menambahkan data",
+        });
         console.log("Kuliner created successfully", result);
+        router.push("/dashboard/kuliner");
       } else {
+        toast({
+          variant: "destructive",
+          title: "Gagal",
+          description: "Data tidak dapat ditambahkan",
+        });
         console.error("Failed to create kuliner", result);
       }
     } catch (error) {
@@ -97,12 +108,12 @@ const KulinerForm = () => {
     if (file) {
       try {
         const compressedFile = await imageCompression(file, {
-          maxSizeMB: 1, // Maksimal ukuran file 1MB
-          maxWidthOrHeight: 800, // Ukuran maksimum lebar/tinggi 800px
+          maxSizeMB: 1,
+          maxWidthOrHeight: 800,
         });
 
-        setThumbnailFile(compressedFile); // Set file terkompresi
-        setThumbnailPreview(URL.createObjectURL(compressedFile)); // Preview gambar
+        setThumbnailFile(compressedFile);
+        setThumbnailPreview(URL.createObjectURL(compressedFile));
       } catch (error) {
         console.error("Error compressing image:", error);
       }
@@ -126,89 +137,93 @@ const KulinerForm = () => {
 
         <div>
           <label>Nama Kuliner</label>
-          <Input {...register("namaKuliner")} />
-          {errors.namaKuliner && (
-            <ErrorLabel message={errors.namaKuliner.message} />
-          )}
+          <Input {...register("name")} />
+          {errors.name && <ErrorLabel message={errors.name.message} />}
         </div>
 
         <div>
           <label>Rating</label>
-          <Select {...register("rating")}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select rating" />
-            </SelectTrigger>
-            <SelectContent>
-              {Array.from({ length: 5 }, (_, index) => (
-                <SelectItem key={index + 1} value={(index + 1).toString()}>
+          <RadioGroup className="flex">
+            {Array.from({ length: 5 }, (_, index) => (
+              <div key={index + 1} className="flex items-center space-x-2">
+                <RadioGroupItem
+                  value={(index + 1).toString()}
+                  id={`qualityRating-${index + 1}`}
+                  {...register("qualityRating")}
+                />
+                <label htmlFor={`qualityRating-${index + 1}`}>
                   {index + 1}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.rating && <ErrorLabel message={errors.rating.message} />}
+                </label>
+              </div>
+            ))}
+          </RadioGroup>
+          {errors.qualityRating && (
+            <ErrorLabel message={errors.qualityRating.message} />
+          )}
         </div>
 
         <div>
           <label>Rating Harga</label>
-          <Select {...register("ratingHarga")}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select rating harga" />
-            </SelectTrigger>
-            <SelectContent>
-              {Array.from({ length: 5 }, (_, index) => (
-                <SelectItem key={index + 1} value={(index + 1).toString()}>
-                  {index + 1}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {errors.ratingHarga && (
-            <ErrorLabel message={errors.ratingHarga.message} />
+          <RadioGroup className="flex">
+            {Array.from({ length: 5 }, (_, index) => (
+              <div key={index + 1} className="flex items-center space-x-2">
+                <RadioGroupItem
+                  value={(index + 1).toString()}
+                  id={`priceRating-${index + 1}`}
+                  {...register("priceRating")}
+                />
+                <label htmlFor={`priceRating-${index + 1}`}>{index + 1}</label>
+              </div>
+            ))}
+          </RadioGroup>
+          {errors.priceRating && (
+            <ErrorLabel message={errors.priceRating.message} />
           )}
         </div>
 
         <div>
           <label>Deskripsi</label>
-          <Textarea {...register("deskripsi")} />
-          {errors.deskripsi && (
-            <ErrorLabel message={errors.deskripsi.message} />
+          <Textarea {...register("description")} />
+          {errors.description && (
+            <ErrorLabel message={errors.description.message} />
           )}
         </div>
 
         <div>
           <label>Alamat</label>
-          <Textarea {...register("alamat")} />
-          {errors.alamat && <ErrorLabel message={errors.alamat.message} />}
+          <Textarea {...register("address")} />
+          {errors.address && <ErrorLabel message={errors.address.message} />}
         </div>
 
         <div>
           <label>Jam Kerja Mulai</label>
-          <Input type="time" {...register("jamMulai")} />
-          {errors.jamMulai && <ErrorLabel message={errors.jamMulai.message} />}
+          <Input type="time" {...register("workingHoursStart")} />
+          {errors.workingHoursStart && (
+            <ErrorLabel message={errors.workingHoursStart.message} />
+          )}
         </div>
 
         <div>
           <label>Jam Kerja Selesai</label>
-          <Input type="time" {...register("jamSelesai")} />
-          {errors.jamSelesai && (
-            <ErrorLabel message={errors.jamSelesai.message} />
+          <Input type="time" {...register("workingHoursStop")} />
+          {errors.workingHoursStop && (
+            <ErrorLabel message={errors.workingHoursStop.message} />
           )}
         </div>
 
         <div>
           <label>Hari Kerja</label>
-          <Input {...register("hariKerja")} />
-          {errors.hariKerja && (
-            <ErrorLabel message={errors.hariKerja.message} />
+          <Input {...register("workingDays")} />
+          {errors.workingDays && (
+            <ErrorLabel message={errors.workingDays.message} />
           )}
         </div>
 
         <div>
           <label>Link GMaps</label>
-          <Input {...register("linkGmaps")} />
-          {errors.linkGmaps && (
-            <ErrorLabel message={errors.linkGmaps.message} />
+          <Input {...register("gmapsLink")} />
+          {errors.gmapsLink && (
+            <ErrorLabel message={errors.gmapsLink.message} />
           )}
         </div>
 
