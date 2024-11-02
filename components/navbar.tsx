@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import React from "react";
 
 const Navbar: React.FC = () => {
   return (
@@ -20,5 +21,5 @@ const Navbar: React.FC = () => {
     </nav>
   );
 };
-
-export default Navbar;
+  
+export default Navbar;
