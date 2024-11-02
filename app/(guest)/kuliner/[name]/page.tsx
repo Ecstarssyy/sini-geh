@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { RotateCw } from "lucide-react";
 import SearchBar from "@/components/search-bar";
 import SkeletonCard from "@/components/skeleton-kuliner-card";
+import Pagination from "@/components/pagination";
 
 interface Kuliner {
   id: string;
@@ -22,14 +23,17 @@ interface Kuliner {
   priceRating: number;
 }
 
-function Page() {
+function Page({ params }: { params: { name: string } }) {
   const [data, setData] = useState<Kuliner[]>([]);
   const [loading, setLoading] = useState(true);
+  const decodedName = decodeURIComponent(params.name);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await fetch("/api/kuliner?limit=3&random=true");
+      const response = await fetch(
+        `/api/kuliner?limit=6&search=${params.name}`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -50,36 +54,24 @@ function Page() {
     <div className="flex flex-col items-center gap-8">
       <SearchBar />
 
-      <div className="bg-gradient-to-l shadow-xl from-[#E76824] to-[#4D2B28] rounded-3xl p-4 flex justify-between items-center shadow-lg">
-        {/* Text Content */}
-        <div className="text-left p-5">
-          <h2 className="text-yellow-400 font-bold text-4xl mb-2">
-            Ini adalah kuliner lampung yang kami rekomendasikan, semoga kamu
-            suka ya..
-          </h2>
-
-          <button
-            onClick={fetchData}
-            className="flex gap-2 bg-white mt-5 text-[#4D2B28] font-semibold py-2 px-4 rounded-md shadow-md hover:bg-gray-100 transition-all"
-          >
-            Cari lagi
-            <RotateCw />
-          </button>
-        </div>
-
-        {/* Image */}
-        <div className="rounded-xl overflow-hidden">
-          <img src="/images/kuliner.png" alt="Kuliner Image" />
-        </div>
+      <div className="justify-center ">
+        <h2 className="font-belanosima text-black-200 font-semi-bold text-2xl mb-2 text-center">
+          Berikut hasil pencarian....
+        </h2>
+        <h1 className="font-belanosima text-[50px] text-black-800 font-bold text-2xl text-center">
+          {decodedName}
+        </h1>
       </div>
 
       <div className="grid grid-cols-3 gap-20 justify-center items-center py-8 ">
         {loading
-          ? Array.from({ length: 3 }).map((_, index) => (
+          ? Array.from({ length: 6 }).map((_, index) => (
               <SkeletonCard key={index} />
             ))
           : data.map((item) => <CardKuliner key={item.id} data={item} />)}
       </div>
+
+      <Pagination />
     </div>
   );
 }

@@ -69,9 +69,9 @@ const Navbar: React.FC = () => {
                 </li>
                 <li>
                   <a
-                    href="rekomendasi"
+                    href="/rekomendasi"
                     className={`text-sm ${
-                      isActive(["/rekomendasi", "/detail", "/rekomendasi_2"])
+                      isActive(["/rekomendasi", "/detail", "/kuliner"])
                         ? "text-yellow-400 font-bold"
                         : "text-white"
                     }  `}

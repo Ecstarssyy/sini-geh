@@ -164,3 +164,45 @@ export async function PATCH(
     );
   }
 }
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const firebaseAdminApp = getFirebaseAdminApp();
+  const db = getFirestore(firebaseAdminApp);
+
+  try {
+    const id = params.id;
+
+    if (!id) {
+      return NextResponse.json({ message: "Missing id" }, { status: 400 });
+    }
+
+    // Referensi dokumen kuliner berdasarkan ID
+    const kulinerRef = db.collection("kuliner").doc(id);
+    const kulinerSnapshot = await kulinerRef.get();
+
+    // Cek apakah dokumen kuliner ada
+    if (!kulinerSnapshot.exists) {
+      return NextResponse.json(
+        { message: "Kuliner not found" },
+        { status: 404 }
+      );
+    }
+
+    // Ambil data kuliner
+    const kulinerData = kulinerSnapshot.data();
+
+    return NextResponse.json({
+      message: "Kuliner fetched successfully",
+      kuliner: kulinerData,
+    });
+  } catch (error) {
+    console.error("Error fetching kuliner:", error);
+    return NextResponse.json(
+      { message: "Failed to fetch kuliner", error: String(error) },
+      { status: 500 }
+    );
+  }
+}

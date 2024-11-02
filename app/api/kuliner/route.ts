@@ -88,6 +88,23 @@ export async function POST(request: NextRequest) {
   }
 }
 
+interface Kuliner {
+  id: string;
+  name?: string; // Define name as optional
+  qualityRating?: number;
+  priceRating?: number;
+  description?: string;
+  address?: string;
+  workingHours?: {
+    start: string;
+    stop: string;
+  };
+  workingDays?: string;
+  gmapsLink?: string;
+  imageUrls?: string[];
+  createdAt?: Date;
+}
+
 export async function GET(request: NextRequest) {
   const firebaseAdminApp = getFirebaseAdminApp();
   const db = getFirestore(firebaseAdminApp);
@@ -97,14 +114,14 @@ export async function GET(request: NextRequest) {
     const page = parseInt(url.searchParams.get("page") || "1", 10);
     const limit = parseInt(url.searchParams.get("limit") || "10", 10);
     const search = url.searchParams.get("search") || ""; // Ambil query pencarian
-    const isRandom = url.searchParams.get("random") === "true"; // Cek apakah random mode diaktifkan
+    const isRandom = url.searchParams.get("random") === "true"; // Mode random
     const offset = (page - 1) * limit;
 
     let kulinerList = [];
     let totalItems = 0;
 
     if (isRandom) {
-      // Mode random: ambil semua data lalu pilih secara acak
+      // Mode random: ambil semua data dan pilih secara acak
       const snapshot = await db.collection("kuliner").get();
       totalItems = snapshot.size;
 
@@ -113,44 +130,50 @@ export async function GET(request: NextRequest) {
         ...doc.data(),
       }));
 
-      // Shuffle array dan ambil jumlah item sesuai limit
-      kulinerList = allData.sort(() => 0.5 - Math.random()).slice(0, limit);
+      // Filter pencarian di mode random, jika ada
+      const filteredData = allData.filter((item: Kuliner) =>
+        search
+          ? item.name && item.name.toLowerCase().includes(search.toLowerCase())
+          : true
+      );
+
+      // Acak hasil dan batasi ke jumlah limit
+      kulinerList = filteredData
+        .sort(() => 0.5 - Math.random())
+        .slice(0, limit);
     } else {
-      // Mode normal: ambil berdasarkan page, limit, dan search
-      let snapshot;
-      if (search) {
-        snapshot = await db
-          .collection("kuliner")
-          .orderBy("createdAt", "desc")
-          .get();
-      } else {
-        snapshot = await db
-          .collection("kuliner")
-          .orderBy("createdAt", "desc")
-          .offset(offset)
-          .limit(limit)
-          .get();
-      }
-
-      const totalItemsSnapshot = await db.collection("kuliner").get();
-      totalItems = totalItemsSnapshot.size;
-
-      kulinerList = snapshot.docs.map((doc) => ({
+      // Mode normal: ambil semua data terlebih dahulu untuk memungkinkan filter substring
+      const snapshot = await db
+        .collection("kuliner")
+        .orderBy("createdAt", "desc")
+        .get();
+      const allData = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
+      totalItems = allData.length;
+
+      // Filter pencarian substring secara manual
+      const filteredData = allData.filter((item: Kuliner) =>
+        search
+          ? item.name && item.name.toLowerCase().includes(search.toLowerCase())
+          : true
+      );
+
+      // Ambil hasil berdasarkan offset dan limit
+      kulinerList = filteredData.slice(offset, offset + limit);
     }
 
     return NextResponse.json({
       kuliner: kulinerList,
-      totalItems: totalItems,
-      currentPage: isRandom ? null : page, // Tidak ada page jika mode random
+      totalItems,
+      currentPage: isRandom ? null : page,
       totalPages: isRandom ? null : Math.ceil(totalItems / limit),
     });
   } catch (error) {
     console.error("Error fetching kuliner:", error);
     return NextResponse.json(
-      { message: "Failed to fetch kuliner", error },
+      { message: "Failed to fetch kuliner", error: String(error) },
       { status: 500 }
     );
   }

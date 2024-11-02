@@ -1,4 +1,5 @@
 import { Globe, Instagram, Phone, Youtube } from "lucide-react";
+import Link from "next/link";
 import React from "react";
 
 function Footer() {
@@ -16,8 +17,12 @@ function Footer() {
           <p className="text-white font-bold text-3xl">Menu</p>
           <ul>
             <li>
-              <p className="text-white">Beranda</p>
-              <p className="text-white">Rekomendasi</p>
+              <Link href="/">
+                <p className="text-white">Beranda</p>
+              </Link>
+              <Link href="/rekomendasi">
+                <p className="text-white">Rekomendasi</p>
+              </Link>
             </li>
           </ul>
         </div>
