@@ -84,5 +84,7 @@ export function UserNav() {
         </DropdownMenuContent>
       </DropdownMenu>
     );
+  } else {
+    return null;
   }
 }

@@ -7,7 +7,6 @@ import { AuthProvider } from "../auth/AuthProvider";
 import NextTopLoader from "nextjs-toploader";
 import { toUser } from "../shared/user";
 import { Toaster } from "@/components/ui/toaster";
-import Providers from "@/components/layout/providers";
 
 export default async function RootLayout({
   children,

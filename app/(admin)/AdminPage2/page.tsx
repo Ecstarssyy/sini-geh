@@ -11,11 +11,6 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [idToDelete, setIdToDelete] = useState(null);
 
-  const handleDelete = (id) => {
-    setIsOpen(true);
-    setIdToDelete(id);
-  };
-
   const handleConfirmDelete = () => {
     setWisata(wisata.filter((item) => item.id !== idToDelete));
     setIsOpen(false);
@@ -72,7 +67,7 @@ function App() {
                   <button className="mr-2 bg-[#8BB69B] p-[9px] ring-2 ring-black">
                  <Pencil className="text-black size-3.5"/>
                   </button>
-                  <button onClick={() => handleDelete(item.id)} className='bg-[#8BB69B] p-[9px] ring-2 ring-black'>
+                  <button onClick={() => {}} className='bg-[#8BB69B] p-[9px] ring-2 ring-black'>
                 <DeleteIcon className="text-black size-3.5"/>
                   </button>
                   </div>
