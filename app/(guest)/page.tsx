@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { LockIcon } from "lucide-react";
 import { SearchIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [showLogin, setShowLogin] = useState(false);
+  const router = useRouter();
 
   return (
     <div
@@ -15,7 +17,7 @@ export default function Home() {
       <div className="absolute top-4 right-4">
         <button
           className="px-3 py-2 bg-[#235347] text-black rounded-md hover:bg-[#DAF1DE]"
-          onClick={() => setShowLogin(true)}
+          onClick={() => router.push('/login')}
         >
           <span className="flex items-center">
             <LockIcon className="text-black" />
@@ -23,34 +25,7 @@ export default function Home() {
           </span>
         </button>
 
-        {/* Login Popup (Initially Hidden) */}
-        {showLogin && (
-          <div
-            className="fixed top-0 left-0 w-full h-screen bg-black bg-opacity-50 flex justify-center items-center"
-            onClick={(e) => {
-              if (e.target.classList.contains("fixed")) {
-                setShowLogin(false);
-              }
-            }}
-          >
-            <div className="bg-[#235347] border border-gray-300 rounded-md shadow-md p-4 w-[400px]">
-              <h3 className="text-lg font-semibold mb-2 text-center">Admin Login</h3>
-              <input
-                type="text"
-                className="w-full px-3 py-2 border border-gray-400 rounded-md mb-2"
-                placeholder="Username"
-              />
-              <input
-                type="password"
-                className="w-full px-3 py-2 border border-gray-400 rounded-md mb-2"
-                placeholder="Password"
-              />
-              <button className="px-4 py-2 bg-[#DAF1DE] text-black rounded-md hover:bg-[#235347]">
-                Login
-              </button>
-            </div>
-          </div>
-        )}
+       
       </div>
 
       <div className="rounded-md flex-col bg-[#DAF1DE] mt-8 w-[870px] h-[430px] flex items-center justify-center py-3">
