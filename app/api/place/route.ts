@@ -7,13 +7,13 @@ import { getTokens } from "next-firebase-auth-edge";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-  // const tokens = await getTokens(request.cookies, authConfig);
-  // if (!tokens) {
-  //   return NextResponse.json(
-  //     { message: "Unauthenticated user" },
-  //     { status: 401 }
-  //   );
-  // }
+  //  const tokens = await getTokens(request.cookies, authConfig);
+  //  if (!tokens) {
+  //    return NextResponse.json(
+  //      { message: "Unauthenticated user" },
+  //      { status: 401 }
+  //    );
+  //  }
 
   const firebaseAdminApp = getFirebaseAdminApp();
   const db = getFirestore(firebaseAdminApp);
@@ -81,30 +81,76 @@ export async function POST(request: NextRequest) {
   }
 }
 
+
+interface TouristSpot {
+  id: string;
+  name?: string;
+  rating?: number;
+  price?: string;
+  description?: string;
+  address?: string;
+  openingHours?: string;
+  workingDays?: string;
+  mapsUrl?: string;
+  imageUrl?: string;
+  createdAt?: Date;
+}
+
 export async function GET(request: NextRequest) {
   const firebaseAdminApp = getFirebaseAdminApp();
   const db = getFirestore(firebaseAdminApp);
 
   try {
-    const { searchParams } = new URL(request.url);
-    const page = parseInt(searchParams.get("page") || "1", 10);
-    const limit = parseInt(searchParams.get("limit") || "10", 10);
+    const url = new URL(request.url);
+    const page = parseInt(url.searchParams.get("page") || "1", 10);
+    const limit = parseInt(url.searchParams.get("limit") || "10", 10);
+    const search = url.searchParams.get("search")?.toLowerCase() || "";
+    const isRandom = url.searchParams.get("random") === "true" || false;
     const offset = (page - 1) * limit;
 
-    const snapshot = await db.collection("touristSpots").orderBy("createdAt").offset(offset).limit(limit).get();
-    const touristSpotList = snapshot.docs.map((doc) => ({
+    let touristSpotList: TouristSpot[] = [];
+    let totalItems = 0;
+
+    // Ambil semua data dari Firestore
+    const snapshot = await db.collection("touristSpots").get();
+    totalItems = snapshot.size;
+
+    const allData = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    }));
+    })) as TouristSpot[];
 
-    return NextResponse.json(touristSpotList);
+    // Filter data berdasarkan pencarian substring, jika ada
+    const filteredData = allData.filter((item) =>
+      search ? item.name?.toLowerCase().includes(search) : true
+    );
+
+    // Jika dalam mode random, acak hasilnya
+    if (isRandom) {
+      touristSpotList = filteredData.sort(() => 0.5 - Math.random()).slice(0, limit);
+    } else {
+      // Dalam mode normal, ambil data sesuai dengan pagination offset dan limit
+      touristSpotList = filteredData.slice(offset, offset + limit);
+    }
+
+    return NextResponse.json({
+      touristSpots: touristSpotList,
+      pagination: {
+        totalItems: filteredData.length,
+        currentPage: isRandom ? null : page,
+        totalPages: isRandom ? null : Math.ceil(filteredData.length / limit),
+        perPage: limit,
+      },
+    });
   } catch (error) {
+    console.error("Error fetching tourist spots:", error);
     return NextResponse.json(
-      { message: "Failed to fetch tourist spots", error },
+      { message: "Failed to fetch tourist spots", error: String(error) },
       { status: 500 }
     );
   }
 }
+
 
 export async function DELETE(request: NextRequest) {
   const tokens = await getTokens(request.cookies, authConfig);
