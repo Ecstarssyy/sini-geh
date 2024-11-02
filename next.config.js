@@ -5,6 +5,13 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: "/api/:path*",
+        destination:
+          process.env.NODE_ENV === "development"
+            ? "http://localhost:3000/api/:path*"
+            : "/api/",
+      },
+      {
         source: "/__/auth",
         destination: `https://${process.env.FIREBASE_PROJECT_ID}.firebaseapp.com/__/auth`,
       },
